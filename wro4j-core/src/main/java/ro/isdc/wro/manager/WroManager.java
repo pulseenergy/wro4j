@@ -121,18 +121,10 @@ public class WroManager
       //must be case insensitive
       if (request.getRequestURI().contains(API_RELOAD_CACHE)) {
         Context.getConfig().reloadCache();
-        response.setContentType("application/json");
-        response.getWriter().write("{response: 'OK'}");
-        response.getWriter().flush();
-        response.getWriter().close();
         return;
       }
       if (request.getRequestURI().contains(API_RELOAD_MODEL)) {
         Context.getConfig().reloadModel();
-        response.setContentType("application/json");
-        response.getWriter().write("{response: 'OK'}");
-        response.getWriter().flush();
-        response.getWriter().close();
         return;
       }
     } else if (isProxyResourceRequest(request)) {
