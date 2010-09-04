@@ -22,10 +22,9 @@ import ro.isdc.wro.model.resource.ResourceType;
 public final class DefaultGroupExtractor implements GroupExtractor {
   private static final Logger LOG = LoggerFactory.getLogger(DefaultGroupExtractor.class);
   /**
-   * Servlet path constants.
+   * The name of the attribute where the servlet path is stored when requestDispatcher.include is called.
    */
   public static final String ATTR_INCLUDE_PATH = "javax.servlet.include.servlet_path";
-  public static final String ATTR_FORWARD_PATH = "javax.servlet.forward.servlet_path";
   /**
    * The name of the parameter used to decide if the group must be minimized.
    */
@@ -38,16 +37,12 @@ public final class DefaultGroupExtractor implements GroupExtractor {
       throw new IllegalArgumentException("Uri cannot be NULL!");
     }
     final String includeUriPath = (String) request.getAttribute(ATTR_INCLUDE_PATH);
-    final String forwardUriPath = (String) request.getAttribute(ATTR_FORWARD_PATH);
     String uri = request.getRequestURI();
     //check if include or uri path are present and use one of these as request uri.
     uri = includeUriPath != null ? includeUriPath : uri;
-    uri = forwardUriPath != null ? forwardUriPath : uri;
-
     final String groupName = FilenameUtils.getBaseName(uri);
     return StringUtils.isEmpty(groupName) ? null : groupName;
   }
-
 
   /**
    * Extracts the resource type, by parsing the uri & finds the extension. If extension is valid ('css' or 'js'),
