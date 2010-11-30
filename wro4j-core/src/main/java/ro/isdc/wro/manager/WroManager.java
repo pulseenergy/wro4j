@@ -359,6 +359,8 @@ public class WroManager
                 // groupExtractor.isMinimized(Context.get().getRequest())
                 final Boolean[] minimizeValues = new Boolean[] { true, false };
                 for (final boolean minimize : minimizeValues) {
+                  // TODO this is a hack - something else is forgetting to clear the detector
+                  groupsProcessor.getDuplicateResourceDetector().reset();
                   final String content = groupsProcessor.process(groupAsList, resourceType, minimize);
                   cacheStrategy.put(new CacheEntry(group.getName(), resourceType, minimize),
                     getContentHashEntryByContent(content));
