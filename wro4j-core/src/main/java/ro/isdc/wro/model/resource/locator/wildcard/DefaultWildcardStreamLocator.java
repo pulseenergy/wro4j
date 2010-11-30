@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -54,16 +55,15 @@ public class DefaultWildcardStreamLocator
    */
   public static final Comparator<File> ASCENDING_ORDER = new Comparator<File>() {
     public int compare(final File o1, final File o2) {
-      return o1.getName().compareTo(o2.getName());
+      return o1.getPath().compareToIgnoreCase(o2.getPath());
     }
   };
-
   /**
    * Comparator used to sort files in alphabetical descending order.
    */
   public static final Comparator<File> DESCENDING_ORDER = new Comparator<File>() {
     public int compare(final File o1, final File o2) {
-      return o1.getName().compareTo(o2.getName());
+      return o2.getPath().compareToIgnoreCase(o1.getPath());
     }
   };
 
@@ -94,7 +94,7 @@ public class DefaultWildcardStreamLocator
     LOG.debug("wildcard: " + wildcard);
     final WildcardFileFilter fileFilter = new WildcardFileFilter(wildcard);
     final IOFileFilter folderFilter = getFolderFilter(wildcard);
-    final Collection<File> files = FileUtils.listFiles(folder, fileFilter, folderFilter);
+    final List<File> files = new ArrayList<File>(FileUtils.listFiles(folder, fileFilter, folderFilter));
     sortFiles(files);
 
     final ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -102,7 +102,6 @@ public class DefaultWildcardStreamLocator
       final String message = "No files found insinde the " + folder.getPath() + " for wildcard: " + wildcard;
       LOG.warn(message);
     }
-    // TODO sort files
     for (final File file : files) {
       LOG.debug("file: " + file.getName());
       final InputStream is = new FileInputStream(file);
@@ -119,8 +118,8 @@ public class DefaultWildcardStreamLocator
    *
    * @param files - the collection to sort.
    */
-  protected void sortFiles(final Collection<File> files) {
-    Collections.sort(new ArrayList<File>(files), ASCENDING_ORDER);
+  protected void sortFiles(final List<File> files) {
+    Collections.sort(files, ASCENDING_ORDER);
   }
 
 
