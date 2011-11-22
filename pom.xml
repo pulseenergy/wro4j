@@ -4,7 +4,7 @@
   
   <groupId>ro.isdc.wro4j</groupId>
   <artifactId>wro4j-parent</artifactId>
-  <version>1.4.3-SNAPSHOT</version>
+  <version>1.4.3-b4174144</version>
   <packaging>pom</packaging>  
   
   <name>Web Resource Optimizer Parent</name>
@@ -372,20 +372,6 @@
       <build>      
         <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.4</version>
-            <executions>
-              <execution>
-                <id>sign-artifacts</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>                         
-          <plugin>
             <inherited>true</inherited>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
@@ -410,15 +396,9 @@
       </build>
       <distributionManagement>
         <repository>
-          <id>sonatype-nexus-staging</id>
-          <name>Nexus Release Repository</name>
-          <url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+          <id>nexus</id>
+          <url>http://server3:8081/nexus/content/repositories/thirdparty</url>
         </repository>        
-        <snapshotRepository>
-          <id>sonatype-nexus-snapshots</id>
-          <name>Sonatype Nexus Snapshots</name>
-          <url>http://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
       </distributionManagement>      
     </profile>
   </profiles>  
